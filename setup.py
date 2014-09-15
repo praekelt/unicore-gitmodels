@@ -14,7 +14,9 @@ setup(
     license='BSD',
     url='http://github.com/praekelt/unicore-gitmodels',
     packages=find_packages(),
-    install_requires=[],
+    install_requires=[
+        "praekelt-python-gitmodel",
+    ],
     include_package_data=True,
     tests_require=[],
     test_suite="setuptest.setuptest.SetupTestSuite",
