@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='unicore-gitmodels',
-    version='1.0.0',
+    version='1.0.1',
     description='Definition of models used for python-gitmodel',
     long_description=
     open('README.rst', 'r').read() +
