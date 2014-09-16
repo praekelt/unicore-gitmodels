@@ -1,4 +1,8 @@
+import re
+import unicodedata
 from gitmodel import fields, models
+
+RE_NUMERICAL_SUFFIX = re.compile(r'^[\w-]*-(\d+)+$')
 
 
 class FilterMixin(object):
@@ -14,7 +18,28 @@ class FilterMixin(object):
         return items
 
 
-class GitCategoryModel(FilterMixin, models.GitModel):
+class SlugifyMixin(object):
+
+    def slugify(self, value):
+        """
+        Normalizes string, converts to lowercase, removes non-alpha characters,
+        and converts spaces to hyphens.
+        """
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+        value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
+        return re.sub('[-\s]+', '-', value)
+
+    def generate_slug(self):
+        if hasattr(self, 'title') and self.title:
+            if hasattr(self, 'slug') and not self.slug:
+                self.slug = self.slugify(unicode(self.title))[:40]
+
+    def save(self, *args, **kwargs):
+        self.generate_slug()
+        return super(SlugifyMixin, self).save(*args, **kwargs)
+
+
+class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
     slug = fields.SlugField(required=True)
     title = fields.CharField(required=True)
     subtitle = fields.CharField(required=False)
