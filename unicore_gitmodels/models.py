@@ -75,7 +75,7 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
         }
 
 
-class GitPageModel(FilterMixin, models.GitModel):
+class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     slug = fields.SlugField(required=True)
     title = fields.CharField(required=True)
     subtitle = fields.CharField(required=False)

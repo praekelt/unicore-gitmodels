@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.3
+-----
+#. Add slugify to page model
+
 1.0.2
 -----
 #. Add slugify to model for cases when no slug is provided
