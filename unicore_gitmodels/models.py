@@ -43,6 +43,8 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
     slug = fields.SlugField(required=True)
     title = fields.CharField(required=True)
     subtitle = fields.CharField(required=False)
+    language = fields.CharField(required=False)
+    source = fields.RelatedField('GitCategoryModel', required=False)
 
     def __unicode__(self):
         return self.title
@@ -68,10 +70,15 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
         return self.slug != other.slug
 
     def to_dict(self):
+        source = self.source.to_dict()\
+            if self.source else None
         return {
             'uuid': self.uuid,
             'slug': self.slug,
             'title': self.title,
+            'subtitle': self.subtitle,
+            'language': self.language,
+            'source': source,
         }
 
 
@@ -85,6 +92,8 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     modified_at = fields.DateTimeField(required=False)
     published = fields.BooleanField(default=True)
     primary_category = fields.RelatedField(GitCategoryModel, required=False)
+    language = fields.CharField(required=False)
+    source = fields.RelatedField('GitPageModel', required=False)
 
     def __unicode__(self):
         return self.title
@@ -96,6 +105,8 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     def to_dict(self):
         primary_category = self.primary_category.to_dict()\
             if self.primary_category else None
+        source = self.source.to_dict()\
+            if self.source else None
 
         return {
             'uuid': self.uuid,
