@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.0
+-----
+#. Added language and source fields
+
 1.0.3
 -----
 #. Add slugify to page model
