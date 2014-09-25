@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.2.0
+-----
+
+#. Added featured_in_category boolean field.
+
 1.1.0
 -----
 #. Added language and source fields
