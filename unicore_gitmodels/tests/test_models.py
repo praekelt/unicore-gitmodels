@@ -98,8 +98,8 @@ class ModelsTestCase(unittest.TestCase):
                 description='description', content='content',
                 created_at=None, modified_at=None,
                 published=True, primary_category=None,
-                featured_in_category=True, language='eng-US',
-                source=None):
+                featured_in_category=None, language='eng-US',
+                source=None, featured=None):
         models = self.get_repo_models()
         now = modified_at or datetime.now()
         then = created_at or (now - timedelta(days=1))
@@ -109,7 +109,7 @@ class ModelsTestCase(unittest.TestCase):
             content=content, created_at=then, modified_at=now,
             published=published, primary_category=primary_category,
             featured_in_category=featured_in_category,
-            language=language, source=source)
+            language=language, source=source, featured=featured)
         page.save(True)
         return page
 
@@ -128,7 +128,11 @@ class ModelsTestCase(unittest.TestCase):
     def test_page_to_dict(self):
         category = self.mk_category('category')
         page1 = self.mk_page('page1', primary_category=category)
-        page2 = self.mk_page('page2', primary_category=category, source=page1)
+        page2 = self.mk_page('page2', primary_category=category, source=page1,
+                             featured_in_category=True, featured=True)
+
+        self.assertEqual(page1.featured, False)
+        self.assertEqual(page1.featured_in_category, False)
 
         self.assertEquals(page2.to_dict(), {
             'uuid': page2.uuid,
@@ -143,4 +147,5 @@ class ModelsTestCase(unittest.TestCase):
             'primary_category': page2.primary_category.to_dict(),
             'source': page1.to_dict(),
             'featured_in_category': True,
+            'featured': True,
         })

@@ -92,6 +92,7 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     modified_at = fields.DateTimeField(required=False)
     published = fields.BooleanField(default=True)
     primary_category = fields.RelatedField(GitCategoryModel, required=False)
+    featured = fields.BooleanField(default=False)
     featured_in_category = fields.BooleanField(default=False)
     language = fields.CharField(required=False)
     source = fields.RelatedField('GitPageModel', required=False)
@@ -121,5 +122,6 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
             'published': self.published,
             'primary_category': primary_category,
             'source': source,
+            'featured': self.featured,
             'featured_in_category': self.featured_in_category,
         }
