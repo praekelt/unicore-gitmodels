@@ -1,5 +1,9 @@
+import os
 from setuptools import setup, find_packages
 
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'requirements.txt')) as f:
+    requires = filter(None, f.readlines())
 
 setup(
     name='unicore-gitmodels',
@@ -14,18 +18,13 @@ setup(
     license='BSD',
     url='http://github.com/praekelt/unicore-gitmodels',
     packages=find_packages(),
-    install_requires=[
-        "praekelt-python-gitmodel",
-    ],
+    install_requires=requires,
     include_package_data=True,
-    tests_require=[],
-    test_suite="unicore_gitmodels.tests",
     classifiers=[
         "Programming Language :: Python",
         "License :: OSI Approved :: BSD License",
         "Development Status :: 4 - Beta",
         "Operating System :: OS Independent",
-        "Framework :: Django",
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
