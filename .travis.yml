@@ -1,0 +1,14 @@
+language: python
+python:
+  - "2.7"
+install:
+  - curl https://raw.githubusercontent.com/praekelt/unicore-cms/develop/utils/install_libgit2.sh | sh
+  - pip install -r requirements.txt --use-wheel
+  - pip install -r requirements-dev.txt --use-wheel
+  - pip install -e . --use-wheel
+script:
+  - find ./unicore_gitmodels -name '*.py' | xargs pep8
+  - find ./unicore_gitmodels -name '*.py' | xargs pyflakes
+  - LIBGIT2=$VIRTUAL_ENV py.test --verbose --cov ./unicore_gitmodels unicore_gitmodels
+after_success:
+  - coveralls
