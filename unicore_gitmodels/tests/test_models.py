@@ -148,4 +148,5 @@ class ModelsTestCase(unittest.TestCase):
             'source': page1.to_dict(),
             'featured_in_category': True,
             'featured': True,
+            'language': 'eng-US',
         })

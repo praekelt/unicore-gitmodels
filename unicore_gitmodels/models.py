@@ -122,6 +122,7 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
             'published': self.published,
             'primary_category': primary_category,
             'source': source,
+            'language': self.language,
             'featured': self.featured,
             'featured_in_category': self.featured_in_category,
         }
