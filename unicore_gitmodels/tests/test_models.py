@@ -122,6 +122,7 @@ class ModelsTestCase(unittest.TestCase):
             'subtitle': 'subtitle',
             'slug': u'category2',
             'language': '',
+            'featured_on_navbar': False,
             'source': category1.to_dict(),
         })
 
