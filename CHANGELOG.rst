@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.0
+-----
+#. Feature category in navbar
+
 1.3.1
 -----
 #. Ensure language is returned in dto.
