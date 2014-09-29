@@ -44,6 +44,7 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
     title = fields.CharField(required=True)
     subtitle = fields.CharField(required=False)
     language = fields.CharField(required=False)
+    featured_in_navbar = fields.BooleanField(default=False)
     source = fields.RelatedField('GitCategoryModel', required=False)
 
     def __unicode__(self):
@@ -78,6 +79,7 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
             'title': self.title,
             'subtitle': self.subtitle,
             'language': self.language,
+            'featured_in_navbar': self.featured_in_navbar,
             'source': source,
         }
 
