@@ -163,3 +163,7 @@ class ModelsTestCase(unittest.TestCase):
 
         data = page3.to_dict()
         self.assertEquals(data['linked_pages'], [page1.uuid, page2.uuid])
+
+        linked_page1, linked_page2 = page3.get_linked_pages()
+        self.assertEqual(linked_page1.to_dict(), page1.to_dict())
+        self.assertEqual(linked_page2.to_dict(), page2.to_dict())
