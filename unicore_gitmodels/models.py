@@ -1,6 +1,8 @@
 import re
 import unicodedata
 from gitmodel import fields, models
+from unicore_gitmodels.fields import ListField
+
 
 RE_NUMERICAL_SUFFIX = re.compile(r'^[\w-]*-(\d+)+$')
 
@@ -98,6 +100,7 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     featured_in_category = fields.BooleanField(default=False)
     language = fields.CharField(required=False)
     source = fields.RelatedField('GitPageModel', required=False)
+    linked_pages = ListField(default=[], required=False)
 
     def __unicode__(self):
         return self.title
@@ -127,4 +130,10 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
             'language': self.language,
             'featured': self.featured,
             'featured_in_category': self.featured_in_category,
+            'linked_pages': self.linked_pages,
         }
+
+    def get_linked_pages(self):
+        if self.linked_pages is None:
+            return []
+        return [self.__class__.get(uuid) for uuid in self.linked_pages]

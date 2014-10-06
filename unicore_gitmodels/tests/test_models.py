@@ -100,7 +100,7 @@ class ModelsTestCase(unittest.TestCase):
                 created_at=None, modified_at=None,
                 published=True, primary_category=None,
                 featured_in_category=None, language='eng-US',
-                source=None, featured=None):
+                source=None, featured=None, linked_pages=None):
         models = self.get_repo_models()
         now = modified_at or datetime.now()
         then = created_at or (now - timedelta(days=1))
@@ -110,7 +110,8 @@ class ModelsTestCase(unittest.TestCase):
             content=content, created_at=then, modified_at=now,
             published=published, primary_category=primary_category,
             featured_in_category=featured_in_category,
-            language=language, source=source, featured=featured)
+            language=language, source=source, featured=featured,
+            linked_pages=linked_pages)
         page.save(True)
         return page
 
@@ -152,4 +153,17 @@ class ModelsTestCase(unittest.TestCase):
             'featured_in_category': True,
             'featured': True,
             'language': 'eng-US',
+            'linked_pages': None,
         })
+
+    def test_linked_pages(self):
+        page1 = self.mk_page('page1')
+        page2 = self.mk_page('page2')
+        page3 = self.mk_page('page3', linked_pages=[page1.uuid, page2.uuid])
+
+        data = page3.to_dict()
+        self.assertEquals(data['linked_pages'], [page1.uuid, page2.uuid])
+
+        linked_page1, linked_page2 = page3.get_linked_pages()
+        self.assertEqual(linked_page1.to_dict(), page1.to_dict())
+        self.assertEqual(linked_page2.to_dict(), page2.to_dict())
