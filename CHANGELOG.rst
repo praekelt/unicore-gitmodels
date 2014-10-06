@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.5.0
+-----
+
+#. Add `related_pages` and ListField() type.
+
 1.4.0
 -----
 #. Feature category in navbar
