@@ -1,6 +1,19 @@
 Changelog
 =========
 
+1.5.0
+-----
+
+#. Add `related_pages` and ListField() type.
+
+1.4.0
+-----
+#. Feature category in navbar
+
+1.3.1
+-----
+#. Ensure language is returned in dto.
+
 1.3.0
 -----
 
@@ -13,20 +26,20 @@ Changelog
 
 1.1.0
 -----
-#. Added language and source fields
+#. Added language and source fields.
 
 1.0.3
 -----
-#. Add slugify to page model
+#. Add slugify to page model.
 
 1.0.2
 -----
-#. Add slugify to model for cases when no slug is provided
+#. Add slugify to model for cases when no slug is provided.
 
 1.0.1
 -----
-#. Ensure all files included in pypi package
+#. Ensure all files included in pypi package.
 
 1.0.0
 -----
-#. Initial version from unicore-cms/unicore-cms-django
+#. Initial version from unicore-cms/unicore-cms-django.
