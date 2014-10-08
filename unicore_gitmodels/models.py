@@ -48,6 +48,7 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
     language = fields.CharField(required=False)
     featured_in_navbar = fields.BooleanField(default=False)
     source = fields.RelatedField('GitCategoryModel', required=False)
+    position = fields.IntegerField(required=False, default=0)
 
     def __unicode__(self):
         return self.title
@@ -83,7 +84,14 @@ class GitCategoryModel(SlugifyMixin, FilterMixin, models.GitModel):
             'language': self.language,
             'featured_in_navbar': self.featured_in_navbar,
             'source': source,
+            'position': self.position,
         }
+
+    @classmethod
+    def all(cls):
+        items = list(super(GitCategoryModel, cls).all())
+        sorted_items = sorted(items, key=lambda cat: cat.position)
+        return models.ModelSet((c for c in sorted_items))
 
 
 class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
