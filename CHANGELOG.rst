@@ -1,6 +1,16 @@
 Changelog
 =========
 
+1.6.0
+-----
+
+#. Add default sorting to `all()` using position field
+
+1.5.0
+-----
+
+#. Add `related_pages` and ListField() type.
+
 1.4.0
 -----
 #. Feature category in navbar
