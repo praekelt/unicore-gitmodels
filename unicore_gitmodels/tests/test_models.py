@@ -100,7 +100,8 @@ class ModelsTestCase(unittest.TestCase):
                 created_at=None, modified_at=None,
                 published=True, primary_category=None,
                 featured_in_category=None, language='eng-US',
-                source=None, featured=None, linked_pages=None):
+                source=None, featured=None, linked_pages=None,
+                position=0):
         models = self.get_repo_models()
         now = modified_at or datetime.now()
         then = created_at or (now - timedelta(days=1))
@@ -111,7 +112,7 @@ class ModelsTestCase(unittest.TestCase):
             published=published, primary_category=primary_category,
             featured_in_category=featured_in_category,
             language=language, source=source, featured=featured,
-            linked_pages=linked_pages)
+            linked_pages=linked_pages, position=position)
         page.save(True)
         return page
 
@@ -132,11 +133,13 @@ class ModelsTestCase(unittest.TestCase):
 
     def test_page_to_dict(self):
         category = self.mk_category('category')
-        page1 = self.mk_page('page1', primary_category=category)
+        page1 = self.mk_page('page1', primary_category=category, position=1)
         page2 = self.mk_page('page2', primary_category=category, source=page1,
-                             featured_in_category=True, featured=True)
+                             featured_in_category=True, featured=True,
+                             position=4)
 
         self.assertEqual(page1.featured, False)
+        self.assertEqual(page1.position, 1)
         self.assertEqual(page1.featured_in_category, False)
 
         self.assertEquals(page2.to_dict(), {
@@ -155,6 +158,7 @@ class ModelsTestCase(unittest.TestCase):
             'featured': True,
             'language': 'eng-US',
             'linked_pages': None,
+            'position': 4,
         })
 
     def test_linked_pages(self):
@@ -182,3 +186,17 @@ class ModelsTestCase(unittest.TestCase):
         self.assertEquals(categories[1].title, 'category3')
         self.assertEquals(categories[2].title, 'category1')
         self.assertEquals(categories[3].title, 'category2')
+
+    def test_order_of_pages(self):
+        self.mk_page('page1', position=3)
+        self.mk_page('page2', position=4)
+        self.mk_page('page3', position=2)
+        self.mk_page('page4', position=1)
+
+        models = self.get_repo_models()
+        pages = list(models.GitPageModel.all())
+
+        self.assertEquals(pages[0].title, 'page4')
+        self.assertEquals(pages[1].title, 'page3')
+        self.assertEquals(pages[2].title, 'page1')
+        self.assertEquals(pages[3].title, 'page2')
