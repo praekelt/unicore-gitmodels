@@ -109,6 +109,7 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     language = fields.CharField(required=False)
     source = fields.RelatedField('GitPageModel', required=False)
     linked_pages = ListField(default=[], required=False)
+    position = fields.IntegerField(required=False, default=0)
 
     def __unicode__(self):
         return self.title
@@ -116,6 +117,12 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
     @property
     def uuid(self):
         return self.id
+
+    @classmethod
+    def all(cls):
+        items = list(super(GitPageModel, cls).all())
+        sorted_items = sorted(items, key=lambda page: page.position)
+        return models.ModelSet((c for c in sorted_items))
 
     def to_dict(self):
         primary_category = self.primary_category.to_dict()\
@@ -139,6 +146,7 @@ class GitPageModel(SlugifyMixin, FilterMixin, models.GitModel):
             'featured': self.featured,
             'featured_in_category': self.featured_in_category,
             'linked_pages': self.linked_pages,
+            'position': self.position,
         }
 
     def get_linked_pages(self):
