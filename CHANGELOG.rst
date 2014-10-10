@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.7.0
+-----
+
+#. Add default sorting to `all()` using position field on GitPageModel
+
 1.6.0
 -----
 
