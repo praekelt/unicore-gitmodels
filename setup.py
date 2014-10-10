@@ -7,7 +7,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 
 setup(
     name='unicore-gitmodels',
-    version='1.6.0',
+    version='1.7.0',
     description='Definition of models used for python-gitmodel',
     long_description=
     open('README.rst', 'r').read() +
